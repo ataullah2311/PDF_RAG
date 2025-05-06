@@ -15,6 +15,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain.document_loaders import PyPDFLoader
+from chromadb.config import Settings  # Make sure this is imported
 
 # Load environment
 load_dotenv()
@@ -113,7 +114,16 @@ if not splits:
 # --- Chroma Vector DB ---
 @st.cache_resource(show_spinner=False)
 def get_vectorstore(_docs):
-    return Chroma.from_documents(_docs, embeddings, persist_directory="./chroma_index")
+    return Chroma.from_documents(
+        _docs,
+        embeddings,
+        persist_directory="./chroma_index",
+        client_settings=Settings(
+            chroma_api_impl="local",
+            persist_directory="./chroma_index",
+            anonymized_telemetry=False  # Optional, disables telemetry
+        )
+    )
 
 vectorstore = get_vectorstore(splits)
 retriever = vectorstore.as_retriever()
