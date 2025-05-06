@@ -13,7 +13,9 @@ from langchain.chains.retrieval import create_retrieval_chain
 
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_chroma import Chroma
+#from langchain_chroma import Chroma
+from langchain.vectorstores import FAISS
+
 from langchain.document_loaders import PyPDFLoader
 from chromadb.config import Settings  # Make sure this is imported
 
@@ -111,19 +113,12 @@ if not splits:
     st.warning("PDFs could not be parsed properly. Try a different file.")
     st.stop()
 
-# --- Chroma Vector DB ---
+
+
 @st.cache_resource(show_spinner=False)
 def get_vectorstore(_docs):
-    return Chroma.from_documents(
-        _docs,
-        embeddings,
-        persist_directory="./chroma_index",
-        client_settings=Settings(
-            chroma_api_impl="local",
-            persist_directory="./chroma_index",
-            anonymized_telemetry=False  # optional
-        )
-    )
+    return FAISS.from_documents(_docs, embeddings)
+
 
 vectorstore = get_vectorstore(splits)
 retriever = vectorstore.as_retriever()
