@@ -1,0 +1,7 @@
+# .streamlit/config.toml
+[theme]
+primaryColor = "#6C63FF"       # Accent color (buttons, links)
+backgroundColor = "#1E1E2F"    # Page background
+secondaryBackgroundColor = "#2C2C3E"  # Sidebar/background boxes
+textColor = "#FFFFFF"          # Main text color
+font = "sans serif"
