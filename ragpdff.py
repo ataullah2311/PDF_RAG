@@ -121,7 +121,7 @@ def get_vectorstore(_docs):
         client_settings=Settings(
             chroma_api_impl="local",
             persist_directory="./chroma_index",
-            anonymized_telemetry=False  # Optional, disables telemetry
+            anonymized_telemetry=False  # optional
         )
     )
 
