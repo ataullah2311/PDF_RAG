@@ -41,7 +41,7 @@ header, .css-18e3th9 {
     color: white;
 }
 [data-testid="stSidebar"] {
-    background-color: #1c1f26;
+    background-color: #93a2c4;
 }
 .chat-message.user {
     background-color: #2c3e50;
